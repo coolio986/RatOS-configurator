@@ -53,7 +53,7 @@ export const Driver = z
 	.object({
 		id: DriverID,
 		title: z.string(),
-		protocol: z.enum(['SPI', 'UART']),
+		protocol: z.enum(['SPI', 'UART', 'NONE']),
 		coolingCurrentThreshold: z.number(),
 		voltages: Voltage.array(),
 		maxCurrent: z.number().min(0),
@@ -68,6 +68,12 @@ export const Driver = z
 			.or(
 				z.object({
 					type: z.enum(['TMC2240']),
+				}),
+			)
+			.or(
+				z.object({
+					// External closed-loop step servo — no Klipper TMC driver section is generated.
+					type: z.enum(['STEP_SERVO']),
 				}),
 			),
 	);

@@ -174,7 +174,8 @@ export const PrinterRailSettings: React.FC<PrinterRailSettingsProps> = (props) =
 	);
 
 	const supportedDrivers = Drivers.filter((d) => {
-		return d.protocol === 'UART' || board?.stepperSPI != null;
+		// Step servos use an external driver (protocol NONE) — always selectable.
+		return d.type === 'STEP_SERVO' || d.protocol === 'UART' || board?.stepperSPI != null;
 	}).map((d) => {
 		return {
 			...d,

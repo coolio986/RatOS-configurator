@@ -538,6 +538,10 @@ export const constructKlipperConfigHelpers = async (
 				`microsteps: ${rail.microstepping}`,
 				`full_steps_per_rotation: ${rail.stepper.fullStepsPerRotation}`,
 			);
+			if (rail.driver.type === 'STEP_SERVO') {
+				// Step servos need a wider minimum step pulse than TMC drivers.
+				section.push(`step_pulse_duration: 0.0000025`);
+			}
 			if (rail.axis === PrinterAxis.extruder || rail.axis === PrinterAxis.extruder1) {
 				const toolhead = utils.getToolhead(rail.axis);
 				if (toolhead == null) {
@@ -677,6 +681,12 @@ export const constructKlipperConfigHelpers = async (
 			const rail = typeof axis === 'object' ? axis : config.rails.find((r) => r.axis === axis);
 			if (rail == null) {
 				throw new Error(`No rail found for axis ${axis}`);
+			}
+			// Step-servo axes are driven by an external closed-loop driver — Klipper must not
+			// generate a [tmc...] section for them. Emitting nothing here is what retires the
+			// old strip_tmc.py hack.
+			if (rail.driver.type === 'STEP_SERVO') {
+				return '';
 			}
 			const preset = findPreset(rail.stepper, rail.driver, rail.voltage, rail.current);
 			const section = noHeader ? [] : utils.getMotorComments(rail);
