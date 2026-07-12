@@ -186,6 +186,13 @@ export const BasePrinterRail = z.object({
 		.describe(
 			'Microstepping of the stepper driver, higher values increase resolution and lower noise but increases load on the MCU',
 		),
+	stepServoStepsPerRotation: z
+		.number()
+		.min(1)
+		.optional()
+		.describe(
+			'Pulses per revolution of an external step servo (klipper full_steps_per_rotation). Only used when the driver is a step servo; microstepping is forced to 1 for these axes.',
+		),
 });
 
 export const PrinterRailDefinition = BasePrinterRail.extend({
