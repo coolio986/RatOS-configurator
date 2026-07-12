@@ -29,7 +29,6 @@ ${r.renderInputShaper(e.size)}
 ### STEPPER MOTORS, DRIVERS & SPEED LIMITS
 #############################################################################################################
 ${r.renderMotorSections()}
-${r.renderServoEnableDelay()}
 ${r.renderSpeedLimits()}
 
 [bed_mesh]

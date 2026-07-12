@@ -1,4 +1,4 @@
-// File: /tmp/claude-1000/-home-anthony-Downloads-RatOS-2-1-0/b556e461-1155-481a-be21-819043bc63bc/scratchpad/RatOS-configurator/src/app/calibration/page.tsx
+// File: /home/anthony/Downloads/RatOS-configurator-source-v2.1.1/src/app/calibration/page.tsx
 import * as entry from '../../../../app/calibration/page.js'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
