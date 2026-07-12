@@ -13,6 +13,7 @@ from . import idex_modes
 class RatOSHybridCoreXYKinematics:
     def __init__(self, toolhead, config):
         self.printer = config.get_printer()
+        self.supports_dual_carriage = True  # Kalico kinematics API (IDEX)
         self.inverted = False
         if config.has_section('ratos_hybrid_corexy'):
             hcxy_config = config.getsection('ratos_hybrid_corexy')
@@ -111,6 +112,11 @@ class RatOSHybridCoreXYKinematics:
     def note_z_not_homed(self):
         # Helper for Safe Z Home
         self.limits[2] = (1.0, -1.0)
+    def clear_homing_state(self, axes):
+        for i, _ in enumerate(self.limits):
+            if i in axes:
+                self.limits[i] = (1.0, -1.0)
+
     def home_axis(self, homing_state, axis, rail):
         position_min, position_max = rail.get_range()
         hi = rail.get_homing_info()
