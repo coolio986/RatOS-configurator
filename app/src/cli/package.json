@@ -1,6 +1,0 @@
-{
-	"type": "module",
-	"scripts": {
-		"build": "pnpx tsx ./build.ts"
-	}
-}
